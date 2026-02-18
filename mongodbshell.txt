@@ -1,0 +1,903 @@
+
+test> show dbs
+admin       40.00 KiB
+collegedb  128.00 KiB
+config     108.00 KiB
+local      112.00 KiB
+test> db collegedb
+Uncaught:
+SyntaxError: Missing semicolon. (1:2)
+
+> 1 | db collegedb
+    |   ^
+  2 |
+
+test> use collegedb
+switched to db collegedb
+collegedb> db
+collegedb
+collegedb> db.teacherinfo.insertOne({name:"Snehal",age:40,subject:"DS",exp:10})
+{
+  acknowledged: true,
+  insertedId: ObjectId('699438c656e04e91a44d7942')
+}
+collegedb> db.teacherinfo.insertMany({name:"Nikita",age:30,subject:"Java",exp:3})
+MongoInvalidArgumentError: Argument "docs" must be an array of documents
+collegedb> db.teacherinfo.insertMany([{name:"Nikita",age:30,subject:"Java",exp:3},{name:"Pratiksha",age:32,subject:"Python",exp:5},{name:"Anu",age:45,subject:"OS",exp:12}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('699439d756e04e91a44d7943'),
+    '1': ObjectId('699439d756e04e91a44d7944'),
+    '2': ObjectId('699439d756e04e91a44d7945')
+  }
+}
+collegedb> db.studeninfo.find()
+
+collegedb> db.studentinfo.find()
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7947'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 8.4
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7948'),
+    name: 'Dhoni',
+    age: 26,
+    cgpa: 9.5
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studeninfo.find().limit(1)
+
+collegedb> db.studeninfo.find() limit(1)
+Uncaught:
+SyntaxError: Missing semicolon. (1:20)
+
+> 1 | db.studeninfo.find() limit(1)
+    |                     ^
+  2 |
+
+collegedb> db.studentinfo.find().limit(1)
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  }
+]
+collegedb> db.studentinfo.find().sort{{'age':1}}
+Uncaught:
+SyntaxError: Missing semicolon. (1:26)
+
+> 1 | db.studentinfo.find().sort{{'age':1}}
+    |                           ^
+  2 |
+
+collegedb> db.studentinfo.find().sort({'age':1})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7947'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 8.4
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7948'),
+    name: 'Dhoni',
+    age: 26,
+    cgpa: 9.5
+  }
+]
+collegedb> db.studentinfo.find().sort({'age':-1})
+[
+  {
+    _id: ObjectId('699434ef9badf717b24d7948'),
+    name: 'Dhoni',
+    age: 26,
+    cgpa: 9.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7947'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 8.4
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find().sort({'age':-1})
+[
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find().sort({'age':-1}).limit(1)
+[
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  }
+]
+collegedb> db.studentinfo.find().sort({'age':-1,'name':1}).limit(1)
+[
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  }
+]
+collegedb> db.studentinfo.find({age:20})
+[
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:20},{name:true})
+[ { _id: ObjectId('699435ee9badf717b24d7949'), name: 'Rohit' } ]
+collegedb> db.studentinfo.find({age:20},{name:true,id:false})
+MongoServerError[Location31254]: Cannot do exclusion on field id in inclusion projection
+collegedb> db.studentinfo.find({age:20},{name:true})
+[ { _id: ObjectId('699435ee9badf717b24d7949'), name: 'Rohit' } ]
+collegedb> db.studentinfo.find({age:20},{name:true,age:true,_id:false})
+[ { name: 'Rohit', age: 20 } ]
+collegedb> db.teacherinfo.find()
+[
+  {
+    _id: ObjectId('699438c656e04e91a44d7942'),
+    name: 'Snehal',
+    age: 40,
+    subject: 'DS',
+    exp: 10
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7943'),
+    name: 'Nikita',
+    age: 30,
+    subject: 'Java',
+    exp: 3
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7944'),
+    name: 'Pratiksha',
+    age: 32,
+    subject: 'Python',
+    exp: 5
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7945'),
+    name: 'Anu',
+    age: 45,
+    subject: 'OS',
+    exp: 12
+  }
+]
+collegedb> db.teacherinfo
+collegedb.teacherinfo
+collegedb> db.teacherinfo.updateOne({name:"Snehal"},{$set:{exp:15}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+collegedb> db.teacherinfo.find({name:"Snehal"})
+[
+  {
+    _id: ObjectId('699438c656e04e91a44d7942'),
+    name: 'Snehal',
+    age: 40,
+    subject: 'DS',
+    exp: 15
+  }
+]
+collegedb> db.teacherinfo.updateMany({},{name:"Snehal"},{$set:{exp:15}})
+MongoInvalidArgumentError: Update document requires atomic operators
+collegedb> db.teacherinfo.updateMany({},{$set:{exp:15}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+collegedb> db.teacherinfo.find()
+[
+  {
+    _id: ObjectId('699438c656e04e91a44d7942'),
+    name: 'Snehal',
+    age: 40,
+    subject: 'DS',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7943'),
+    name: 'Nikita',
+    age: 30,
+    subject: 'Java',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7944'),
+    name: 'Pratiksha',
+    age: 32,
+    subject: 'Python',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7945'),
+    name: 'Anu',
+    age: 45,
+    subject: 'OS',
+    exp: 15
+  }
+]
+collegedb> db.teacherinfo.updateMany({name:"Snehal"},{$unset:{exp:15}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+collegedb> db.teacherinfo.find()
+[
+  {
+    _id: ObjectId('699438c656e04e91a44d7942'),
+    name: 'Snehal',
+    age: 40,
+    subject: 'DS'
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7943'),
+    name: 'Nikita',
+    age: 30,
+    subject: 'Java',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7944'),
+    name: 'Pratiksha',
+    age: 32,
+    subject: 'Python',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7945'),
+    name: 'Anu',
+    age: 45,
+    subject: 'OS',
+    exp: 15
+  }
+]
+
+test> use collegedb
+switched to db collegedb
+collegedb> db
+collegedb
+collegedb> show collections
+courseinfo
+studentinfo
+teacgerinfo
+teacherinfo
+collegedb> db.studentinfo.find()
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({name:"Dhoni"})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find({name:"Dhoni",age:19})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find({name:{$eq:"Dhoni"}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find({name:{$neq:"Dhoni"}})
+MongoServerError[BadValue]: unknown operator: $neq
+collegedb> db.studentinfo.find({name:{$ne:"Dhoni"}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:{$ge:15}})
+MongoServerError[BadValue]: unknown operator: $ge
+collegedb> db.studentinfo.find({age:{$gt:15}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:{$gt:19}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:{$gte:21}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  }
+]
+collegedb> db.studentinfo.find({age:{$lt:21}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:{$lte:21}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:{$gte:19,$lte:20}},{name:true,age:true})
+[
+  { _id: ObjectId('699433bf9badf717b24d7945'), name: 'Dhoni', age: 19 },
+  { _id: ObjectId('699435ee9badf717b24d7949'), name: 'Rohit', age: 20 }
+]
+
+collegedb> db.studentinfo.find({age:{$gte:19,$lte:20}},{name:true,age:true,_id:false})
+[ { name: 'Dhoni', age: 19 }, { name: 'Rohit', age: 20 } ]
+collegedb> db.studentinfo.find({age:{$in:[19,20,24,28]}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({age:{$nin:[19,20,24,28]}})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  }
+]
+collegedb> db.studentinfo.find({$and:[{name:"Dhoni"},{age:{$gte:19}}]})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find({$and:[{name:"Dhoni"},{age:{$lte:19}}]})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  }
+]
+collegedb> db.studentinfo.find({$and:[{name:"Virat"},{age:{$lte:22}}]})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  }
+]
+collegedb> db.studentinfo.find({$or:[{name:"Dhoni"},{age:{$lte:20}}]})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7945'),
+    name: 'Dhoni',
+    age: 19,
+    cgpa: 9.4
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.find({$nor:[{name:"Dhoni"},{age:{$lte:19}}]})
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.studentinfo.deleteOne({age:19})
+{ acknowledged: true, deletedCount: 1 }
+collegedb> db.studentinfo.find()
+[
+  {
+    _id: ObjectId('699433bf9badf717b24d7944'),
+    name: 'Virat',
+    age: 21,
+    cgpa: 6.5
+  },
+  {
+    _id: ObjectId('699434ef9badf717b24d7946'),
+    name: 'Sunil',
+    age: 25,
+    cgpa: 7.3
+  },
+  {
+    _id: ObjectId('699435ee9badf717b24d7949'),
+    name: 'Rohit',
+    age: 20,
+    cgpa: 8.5
+  }
+]
+collegedb> db.teacherinfo.find()
+[
+  {
+    _id: ObjectId('699438c656e04e91a44d7942'),
+    name: 'Snehal',
+    age: 40,
+    subject: 'DS'
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7943'),
+    name: 'Nikita',
+    age: 30,
+    subject: 'Java',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7944'),
+    name: 'Pratiksha',
+    age: 32,
+    subject: 'Python',
+    exp: 15
+  },
+  {
+    _id: ObjectId('699439d756e04e91a44d7945'),
+    name: 'Anu',
+    age: 45,
+    subject: 'OS',
+    exp: 15
+  }
+]
+collegedb>
+
+collegedb> db.teacherinfo.find({name:"Dhoni"}).explain('executionStats')
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'collegedb.teacherinfo',
+    parsedQuery: { name: { '$eq': 'Dhoni' } },
+    indexFilterSet: false,
+    planCacheShapeHash: '544F3E5C',
+    planCacheKey: 'B9363AF4',
+    optimizationTimeMillis: 0,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'COLLSCAN',
+      filter: { name: { '$eq': 'Dhoni' } },
+      direction: 'forward'
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 0,
+    executionTimeMillis: 47,
+    totalKeysExamined: 0,
+    totalDocsExamined: 4,
+    executionStages: {
+      isCached: false,
+      stage: 'COLLSCAN',
+      filter: { name: { '$eq': 'Dhoni' } },
+      nReturned: 0,
+      executionTimeMillisEstimate: 0,
+      works: 5,
+      advanced: 0,
+      needTime: 4,
+      needYield: 0,
+      saveState: 1,
+      restoreState: 1,
+      isEOF: 1,
+      direction: 'forward',
+      docsExamined: 4
+    }
+  },
+  queryShapeHash: 'E099B17047F470743788C2737096CFD713134C987236ADA7CF2BDA249C0035FB',
+  command: {
+    find: 'teacherinfo',
+    filter: { name: 'Dhoni' },
+    '$db': 'collegedb'
+  },
+  serverInfo: {
+    host: 'DESKTOP-FT9M8D4',
+    port: 27017,
+    version: '8.0.4',
+    gitVersion: 'bc35ab4305d9920d9d0491c1c9ef9b72383d31f9'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1
+}
+collegedb> db.teacherinfo.createIndex({name:1})
+name_1
+collegedb> db.teacherinfo.find({name:"Dhoni"}).explain('executionStats')
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'collegedb.teacherinfo',
+    parsedQuery: { name: { '$eq': 'Dhoni' } },
+    indexFilterSet: false,
+    planCacheShapeHash: '544F3E5C',
+    planCacheKey: 'EEE0759C',
+    optimizationTimeMillis: 0,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'FETCH',
+      inputStage: {
+        stage: 'IXSCAN',
+        keyPattern: { name: 1 },
+        indexName: 'name_1',
+        isMultiKey: false,
+        multiKeyPaths: { name: [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { name: [ '["Dhoni", "Dhoni"]' ] }
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 0,
+    executionTimeMillis: 82,
+    totalKeysExamined: 0,
+    totalDocsExamined: 0,
+    executionStages: {
+      isCached: false,
+      stage: 'FETCH',
+      nReturned: 0,
+      executionTimeMillisEstimate: 19,
+      works: 1,
+      advanced: 0,
+      needTime: 0,
+      needYield: 0,
+      saveState: 1,
+      restoreState: 1,
+      isEOF: 1,
+      docsExamined: 0,
+      alreadyHasObj: 0,
+      inputStage: {
+        stage: 'IXSCAN',
+        nReturned: 0,
+        executionTimeMillisEstimate: 19,
+        works: 1,
+        advanced: 0,
+        needTime: 0,
+        needYield: 0,
+        saveState: 1,
+        restoreState: 1,
+        isEOF: 1,
+        keyPattern: { name: 1 },
+        indexName: 'name_1',
+        isMultiKey: false,
+        multiKeyPaths: { name: [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { name: [ '["Dhoni", "Dhoni"]' ] },
+        keysExamined: 0,
+        seeks: 1,
+        dupsTested: 0,
+        dupsDropped: 0
+      }
+    }
+  },
+  queryShapeHash: 'E099B17047F470743788C2737096CFD713134C987236ADA7CF2BDA249C0035FB',
+  command: {
+    find: 'teacherinfo',
+    filter: { name: 'Dhoni' },
+    '$db': 'collegedb'
+  },
+  serverInfo: {
+    host: 'DESKTOP-FT9M8D4',
+    port: 27017,
+    version: '8.0.4',
+    gitVersion: 'bc35ab4305d9920d9d0491c1c9ef9b72383d31f9'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1
+}
+collegedb> db.teacherinfo.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' }
+]
+collegedb> db.teacherinfo.dropIndexes('name_1')
+{ nIndexesWas: 2, ok:
